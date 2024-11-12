@@ -18,11 +18,7 @@ public class MultiQueueImpl<T, Q> implements MultiQueue<T, Q>{
 
     @Override
     public Set<Q> availableQueues() {
-        Set<Q> ris=new HashSet<>();
-        for (Q q : code.keySet()) {
-            ris.add(q);
-        }
-        return ris;
+        return code.keySet();
     }
 
     @Override
@@ -30,8 +26,7 @@ public class MultiQueueImpl<T, Q> implements MultiQueue<T, Q>{
         if(code.containsKey(queue)) {
             throw new IllegalArgumentException("Già presente");
         }
-        Queue<T> a=new LinkedList<>();
-        code.put(queue, a);
+        code.put(queue, new LinkedList<>());
     }
 
     @Override
@@ -63,13 +58,13 @@ public class MultiQueueImpl<T, Q> implements MultiQueue<T, Q>{
 
     @Override
     public Map<Q, T> dequeueOneFromAllQueues() {
-        Map<Q, T> mappa=new HashMap<>();
+        Map<Q, T> map=new HashMap<>();
         Set<Q> setChiavi=new HashSet<>();
         setChiavi=code.keySet();
         for (Q q : setChiavi) {
-            mappa.put(q, code.get(q).poll());
+            map.put(q, code.get(q).poll());
         }
-        return mappa;
+        return map;
     }
 
     @Override
